@@ -3,7 +3,7 @@ let soldier;
 let aliensContainer;
 let aliens = [];
 let bulletSpeed = 5;
-let soldierSpeed = 8;
+let soldierSpeed = 10;
 let gameLoopId;
 let totalAliensSpawned = 0;
 let maxAliens = 20;
@@ -25,7 +25,7 @@ function startGame() {
 
   document.addEventListener('keydown', handleKeyDown);
   gameLoop();
-  spawnAliensOverTime(); // New function to spawn aliens
+  spawnAliensOverTime();
 }
 
 // Function to spawn aliens at random intervals
@@ -35,9 +35,9 @@ function spawnAliensOverTime() {
       spawnAlien();
       totalAliensSpawned++;
     } else {
-      clearInterval(spawnIntervalId); // Stop spawning when max is reached
+      clearInterval(spawnIntervalId);
     }
-  }, 1000); // Spawn an alien every 1000 milliseconds (1 second)
+  }, 1000);
 }
 
 // Function to spawn a single alien
@@ -47,17 +47,15 @@ function spawnAlien() {
   const alien = document.createElement('div');
   alien.className = `alien ${alienType}`;
   alien.style.right = '0px';
-
-  // Calculate the available vertical space for spawning aliens
   const gameContainerHeight = document.getElementById('game-container').offsetHeight;
-  const alienHeight = 50; // Adjust this value based on the actual alien height
+  const alienHeight = 50;
   const availableSpace = gameContainerHeight - alienHeight;
-
-  // Generate a random vertical position within the available space
   const randomTop = Math.random() * availableSpace;
   alien.style.top = `${randomTop}px`;
-
   alien.style.display = 'block';
+  const health = alienType === 'yellow' ? 8 : 1;
+  alien.setAttribute('data-health', health);
+  
   aliensContainer.appendChild(alien);
   aliens.push(alien);
 }
@@ -82,29 +80,41 @@ function shootBullet() {
   let bullet = document.createElement('div');
   bullet.className = 'bullet';
   bullet.style.left = `${soldier.offsetLeft + soldier.offsetWidth}px`;
-  bullet.style.top = `${soldier.offsetTop + soldier.offsetHeight / 2}px`;
+  bullet.style.top = `${soldier.offsetTop + soldier.offsetHeight / 2 - 2.5}px`; // Center bullet vertically
   document.getElementById('game-container').appendChild(bullet);
 
+  // Move the bullet across the screen
   let bulletInterval = setInterval(() => {
     bullet.style.left = `${bullet.offsetLeft + bulletSpeed}px`;
 
     for (let i = 0; i < aliens.length; i++) {
       if (checkCollision(bullet, aliens[i])) {
-        aliens[i].remove();
-        aliens.splice(i, 1);
-        updateScore(aliens[i].classList[1]);
+        // Decrement health
+        let health = parseInt(aliens[i].getAttribute('data-health')) - 1;
+        aliens[i].setAttribute('data-health', health);
+        
+        if (health <= 0) {
+          // Remove the alien when health is 0 or less
+          updateScore(aliens[i].classList[1]); // Update score before removing the alien
+          aliens[i].remove();
+          aliens.splice(i, 1); // Remove from aliens array
+        }
+
+        // Remove bullet and stop its movement regardless of alien health
         bullet.remove();
         clearInterval(bulletInterval);
-        break;
+        break; // Exit the loop after handling collision
       }
     }
 
+    // Remove the bullet if it goes out of the screen
     if (bullet.offsetLeft > document.getElementById('game-container').offsetWidth) {
       bullet.remove();
       clearInterval(bulletInterval);
     }
   }, 10);
 }
+
 
 function checkCollision(el1, el2) {
   let rect1 = el1.getBoundingClientRect();
@@ -147,6 +157,7 @@ function updateHealth() {
 
 function endGame() {
   cancelAnimationFrame(gameLoopId);
+  clearInterval(spawnIntervalId); // Stop spawning aliens
   alert('Game Over!');
   location.reload();
 }
@@ -154,13 +165,13 @@ function endGame() {
 // Game loop
 function gameLoop() {
   for (let i = 0; i < aliens.length; i++) {
-    let alienSpeed = 1;
+    let alienSpeed = 2;
     if (aliens[i].classList.contains('green')) {
-      alienSpeed = 2;
+      alienSpeed = 3;
     } else if (aliens[i].classList.contains('yellow')) {
-      alienSpeed = 0.5;
+      alienSpeed = 1;
     }
-    aliens[i].style.left = `${aliens[i].offsetLeft - alienSpeed}px`;
+    aliens[i].style.left = `${aliens[i].offsetLeft - alienSpeed}px`; // Move the aliens
 
     if (
       checkCollision(aliens[i], soldier) ||

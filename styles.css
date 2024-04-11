@@ -1,7 +1,52 @@
-#game-container {
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #fff;
+  }
+  
+  #game-title {
+    text-align: center;
+    font-size: 32px;
+    padding: 20px;
+    background-color: #222;
+    width: 1200px;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+  
+  #stats-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+    background-color: #333;
+    width: 1200px;
+    margin: 5px auto;
+    border-radius: 8px;
+  }
+  
+  #health-ammo {
+    display: flex;
+    justify-content: flex-start;
+    padding: 5px;
+  }
+
+  #health-ammo div {
+    margin-right: 20px; /* Add right margin to create spacing */
+  }
+  
+  #score-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+  }
+  
+  #game-container {
+    position: relative;
     width: 1200px;
     height: 800px;
-    position: relative;
+    margin: 5px auto;
     background-image: url("images/moonBg.png");
     background-size: cover;
     border-radius: 8px;
@@ -15,17 +60,18 @@
     font-size: 24px;
     padding: 10px 20px;
     cursor: pointer;
+    border-radius: 5px;
+    box-shadow: #000 5px 5px 5px ;
   }
   
   #soldier {
-    width: 50px;
+    width: 60px;
     height: 50px;
     position: absolute;
     left: 20px;
     top: 50%;
     background-image: url("images/spaceSoldier.png");
     background-size: cover;
-    display: none;
   }
   
   .alien {
@@ -34,7 +80,6 @@
     position: absolute;
     right: 0;
     background-size: cover;
-    /* display: none; */
   }
   
   .red {
@@ -43,10 +88,12 @@
   
   .green {
     background-image: url("images/greenAlien.png");
+    width: 60px;
   }
   
   .yellow {
     background-image: url("images/yellowAlien.png");
+    width: 70px;
   }
   
   .bullet {
@@ -56,10 +103,19 @@
     position: absolute;
   }
   
-  #scoreboard {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 18px;
-    color: white;
+  #high-scores {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 8px;
+  }
+  
+  #high-scores h2 {
+    margin-top: 0;
+  }
+  
+  #high-scores-list {
+    list-style-type: none;
+    padding: 0;
   }

@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Space Soldier Game</title>
-        <link
-            rel="stylesheet"
-            type="text/css"
-            href="styles.css" />
-    </head>
-    <body>
-        <div id="scoreboard">
-            <div>Score: <span id="score">0</span></div>
-            <div>Health: <span id="health">50</span></div>
-        </div>
-        <div id="game-container">
-            <button id="start-button">Start Game</button>
-            <div id="soldier"></div>
-            <div id="aliens-container"></div>
-        </div>
-        <script src="game.js"></script>
-    </body>
+<head>
+  <title>Alien Blaster</title>
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+</head>
+<body>
+  <div id="game-title">Alien Blaster</div>
+  <div id="stats-bar">
+    <div id="health-ammo">
+      <div>Health:  <span id="health">50</span></div>
+      <div>Ammo: <span id="ammo">100</span></div>
+    </div>
+    <div id="score-container">
+      <div>Score: <span id="score">0</span></div>
+    </div>
+  </div>
+  <div id="game-container">
+    <button id="start-button">Start Game</button>
+    <div id="soldier"></div>
+    <div id="aliens-container"></div>
+  </div>
+  <div id="high-scores">
+    <h2>High Scores</h2>
+    <ul id="high-scores-list"></ul>
+  </div>
+  <script src="game.js"></script>
+</body>
 </html>
