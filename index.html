@@ -9,8 +9,16 @@
     </head>
     <body>
         <div id="grid-container">
-            <div id="game-title">Alien Blaster</div>
+            <div id="game-title">
+                <img
+                    src="images/alienBlaster.png"
+                    alt="Alien Blaster" />
+            </div>
             <div id="stats-bar">
+                <video autoplay muted loop id="vitals-video">
+                    <source src="images/vitals.mp4" type="video/mp4">>
+                    </video>
+                </video>
                 <div id="health-ammo">
                     <div>Health: <span id="health">50</span></div>
                     <div>Ammo: <span id="ammo">100</span></div>
@@ -30,20 +38,21 @@
                     <div id="aliens-container"></div>
                 </div>
                 <div id="instructions-box">
-                    <h2>Instructions</h2>
+                    <h2>How to Play</h2>
                     <p>Use up arrow and down arrow to move the soldier</p>
                     <p>Use space bar to fire your laser</p>
+                    <p>Increase your score by shooting aliens</p>
                     <div class="alien-info">
                         <div class="alien red"></div>
                         <p>1 health = 1 point</p>
                     </div>
                     <div class="alien-info">
                         <div class="alien green"></div>
-                        <p>1 health = 2 points</p>
+                        <p>1 health, faster = 2 points</p>
                     </div>
                     <div class="alien-info">
                         <div class="alien yellow"></div>
-                        <p>8 health = 3 points</p>
+                        <p>8 health, slower = 3 points</p>
                     </div>
                 </div>
             </div>
