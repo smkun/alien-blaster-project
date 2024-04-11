@@ -3,7 +3,6 @@ let soldier;
 let aliensContainer;
 let aliens = [];
 let bulletSpeed = 5;
-let rocketSpeed = 8;
 let soldierSpeed = 10;
 let gameLoopId;
 let totalAliensSpawned = 0;
@@ -73,9 +72,6 @@ function handleKeyDown(event) {
     case 32: // Space bar
       shootBullet();
       break;
-    case 82: // r key
-      shootRocket();
-      break;
   }
 }
 
@@ -119,45 +115,7 @@ function shootBullet() {
   }, 10);
 }
 
-// Shoot a rocket from the soldier
-function shootRocket() {
-  let rocket = document.createElement('div');
-  rocket.className = 'rocket';
-  rocket.style.left = `${soldier.offsetLeft + soldier.offsetWidth}px`;
-  rocket.style.top = `${soldier.offsetTop + soldier.offsetHeight / 2 - 2.5}px`; // Center rocket vertically
-  document.getElementById('game-container').appendChild(rocket);
 
-  // Move the rocket across the screen
-  let rocketInterval = setInterval(() => {
-    rocket.style.left = `${rocket.offsetLeft + rocketSpeed}px`;
-
-    for (let i = 0; i < aliens.length; i++) {
-      if (checkCollision(rocket, aliens[i])) {
-        // Decrement health
-        let health = parseInt(aliens[i].getAttribute('data-health')) - 5;
-        aliens[i].setAttribute('data-health', health);
-        
-        if (health <= 0) {
-          // Remove the alien when health is 0 or less
-          updateScore(aliens[i].classList[1]); // Update score before removing the alien
-          aliens[i].remove();
-          aliens.splice(i, 1); // Remove from aliens array
-        }
-
-        // Remove rocket and stop its movement regardless of alien health
-        rocket.remove();
-        clearInterval(rocketInterval);
-        break; // Exit the loop after handling collision
-      }
-    }
-
-    // Remove the rocket if it goes out of the screen
-    if (rocket.offsetLeft > document.getElementById('game-container').offsetWidth) {
-      rocket.remove();
-      clearInterval(rocketInterval);
-    }
-  }, 10);
-}
 function checkCollision(el1, el2) {
   let rect1 = el1.getBoundingClientRect();
   let rect2 = el2.getBoundingClientRect();

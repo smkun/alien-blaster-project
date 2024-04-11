@@ -184,6 +184,13 @@ body {
     position: absolute;
 }
 
+.rocket {
+    width: 10px;
+    height: 5px;
+    background-color: rgb(0, 225, 255);
+    position: absolute;
+}
+
 .alien-info {
     display: flex;
     align-items: center;
