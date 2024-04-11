@@ -4,55 +4,91 @@ body {
     font-family: Arial, sans-serif;
     background-color: #000;
     color: #fff;
-  }
-  
-  #game-title {
-    text-align: center;
-    font-size: 32px;
-    padding: 20px;
-    background-color: #222;
-    width: 1200px;
-    margin: 0 auto;
-    border-radius: 8px;
-  }
-  
-  #stats-bar {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 10px;
-    background-color: #333;
-    width: 1200px;
-    margin: 5px auto;
-    border-radius: 8px;
-  }
-  
-  #health-ammo {
     display: flex;
-    justify-content: flex-start;
-    padding: 5px;
-  }
+    justify-content: center;
+    height: 100vh; 
+}
 
-  #health-ammo div {
-    margin-right: 20px; /* Add right margin to create spacing */
-  }
-  
-  #score-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 5px;
-  }
-  
-  #game-container {
-    position: relative;
-    width: 1200px;
-    height: 800px;
-    margin: 5px auto;
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 10px; 
+    width: 100%;
+    max-width: 1800px; 
+    padding: 20px;
+    margin: auto; 
+}
+
+#game-title {
+    grid-column: 1 / span 12;
+    text-align: center;
+    font-size: 48px; 
+    background-color: #222;
+    padding: 20px 0; 
+    color: #fff; 
+}
+
+#stats-bar {
+    grid-column: 1 / span 12;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    background-color: #333;
+}
+
+#health-ammo {
+    grid-column: 4 / span 2; 
+}
+
+#score-container {
+    grid-column: 9 / span 1;
+    text-align: right;
+}
+
+#game-section {
+    grid-column: 1 / span 12;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 10px;
+}
+
+#high-scores-box {
+    grid-column: 1 / span 3; 
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+}
+#game-container {
+    grid-column: 4 / span 6; 
+    position: relative; 
+    height: 800px; 
     background-image: url("images/moonBg.png");
     background-size: cover;
     border-radius: 8px;
-  }
-  
-  #start-button {
+}
+#instructions-box {
+    grid-column: 10 / span 3; 
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+}
+#high-scores-box h2,
+#instructions-box h2 {
+    margin-top: 0;
+}
+
+#high-scores-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#game-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+*/ #start-button {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -60,11 +96,10 @@ body {
     font-size: 24px;
     padding: 10px 20px;
     cursor: pointer;
-    border-radius: 5px;
-    box-shadow: #000 5px 5px 5px ;
-  }
-  
-  #soldier {
+}
+
+/*Game Elements*/
+#soldier {
     width: 60px;
     height: 50px;
     position: absolute;
@@ -72,50 +107,44 @@ body {
     top: 50%;
     background-image: url("images/spaceSoldier.png");
     background-size: cover;
-  }
-  
-  .alien {
+}
+
+.alien {
     width: 50px;
     height: 50px;
     position: absolute;
     right: 0;
     background-size: cover;
-  }
-  
-  .red {
+}
+
+.red {
     background-image: url("images/redAlien.png");
-  }
-  
-  .green {
+}
+
+.green {
     background-image: url("images/greenAlien.png");
     width: 60px;
-  }
-  
-  .yellow {
+}
+
+.yellow {
     background-image: url("images/yellowAlien.png");
     width: 70px;
-  }
-  
-  .bullet {
+}
+
+.bullet {
     width: 10px;
     height: 5px;
     background-color: red;
     position: absolute;
-  }
-  
-  #high-scores {
-    width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #222;
-    border-radius: 8px;
-  }
-  
-  #high-scores h2 {
-    margin-top: 0;
-  }
-  
-  #high-scores-list {
-    list-style-type: none;
-    padding: 0;
-  }
+}
+
+.alien-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.alien-info .alien {
+    position: static;
+    margin-right: 10px;
+}
