@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Robot";
+    src: url("fonts/robot9000italic-yzxe8-webfont.woff2") format("woff2"),
+        url("fonts/robot9000italic-yzxe8-webfont.woff") format("woff");
+}
 body {
     margin: 0;
     padding: 0;
@@ -18,7 +23,7 @@ body {
     gap: 10px;
     width: 100%;
     max-width: 1800px;
-    padding: 20px;
+    padding: 10px;
     margin: auto;
 }
 
@@ -33,17 +38,18 @@ body {
     background-repeat: no-repeat;
     border: 2px solid black;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+    margin-top: 3px;
 }
 #game-title img {
-    max-width: 400px;
-    max-height: 350px;
+    max-width: 475px;
+    max-height: 335px;
 }
 #stats-bar {
+    font-family: 'Robot','Courier New', Courier, monospace;
     grid-column: 1 / span 12;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     position: relative;
-    /* background-color: #333; */
     border-radius: 5px;
     border: 2px solid black;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
@@ -63,12 +69,15 @@ body {
 }
 
 #health-ammo {
-    grid-column: 4 / span 2;
+    grid-column: 4 / span 2;;
+    color: red;
+    text-align: center;
 }
 
 #score-container {
     grid-column: 9 / span 1;
-    text-align: right;
+    text-align: center;
+    color: rgb(126, 204, 235);
 }
 
 #game-section {
@@ -79,6 +88,8 @@ body {
 }
 
 #high-scores-box {
+    font-family: 'Robot','Courier New', Courier, monospace;
+    color: lightgray;
     grid-column: 1 / span 3;
     background-color: #333;
     padding: 20px;
@@ -97,16 +108,14 @@ body {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
 #instructions-box {
+    font-family: 'Robot','Courier New', Courier, monospace;
+    color: lightgray;
     grid-column: 10 / span 3;
     background-color: #333;
     padding: 20px;
     border-radius: 8px;
     border: 2px solid black;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
-}
-#high-scores-box h2,
-#instructions-box h2 {
-    margin-top: 0;
 }
 
 #high-scores-list {
@@ -121,7 +130,8 @@ body {
     align-items: center;
     justify-content: center;
 }
-*/ #start-button {
+#start-button {
+    font-family: 'Robot','Courier New', Courier, monospace;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -129,6 +139,9 @@ body {
     font-size: 24px;
     padding: 10px 20px;
     cursor: pointer;
+    border-radius: 5px;
+    background-color: blue;
+    color: lightgray;
 }
 
 /*Game Elements*/
