@@ -3,7 +3,7 @@ let aliensContainer;
 let aliens = [];
 let bulletSpeed = 5;
 let rocketSpeed = 8;
-let soldierSpeed = 10;
+let soldierSpeed = 12;
 let gameLoopId;
 let totalAliensSpawned = 0;
 let maxAliens = 20;
@@ -47,13 +47,15 @@ function startWave() {
 
 function startNextWave() {
     if (!isWaveInProgress) {
+        document.getElementById("next-wave-button").style.display = "none";
+        soldier.style.display = "block";
         isWaveInProgress = true;
         maxAliens = Math.floor(
             maxAliensPerWave * (1 + waveIncreaseFactor * currentWave)
         );
         currentWave++;
         document.getElementById("wave").textContent = currentWave;
-        document.getElementById("next-wave-button").style.display = "none";
+
         startWave();
     }
 }
@@ -69,18 +71,13 @@ function spawnAliensOverTime() {
         }
     }, 1000);
 }
-
 function checkForWaveCompletion() {
-    let waveCompletionCheckInterval = setInterval(() => {
-        if (aliens.length === 0) {
-            clearInterval(waveCompletionCheckInterval);
-            isWaveInProgress = false;
-            if (parseInt(document.getElementById("health").textContent) > 0) {
-                document.getElementById("next-wave-button").style.display =
-                    "block";
-            }
+    if (totalAliensSpawned >= maxAliens && aliens.length === 0) {
+        isWaveInProgress = false;
+        if (parseInt(document.getElementById("health").textContent) > 0) {
+            document.getElementById("next-wave-button").style.display = "block";
         }
-    }, 1000);
+    }
 }
 
 function updateHighScoresList() {
@@ -264,13 +261,19 @@ function endGame() {
     cancelAnimationFrame(gameLoopId);
     clearInterval(spawnIntervalId);
 
+    while (aliensContainer.firstChild) {
+        aliensContainer.firstChild.remove();
+    }
+
     const gameOverElement = document.getElementById("game-over");
     gameOverElement.innerHTML = "";
 
     const imageElement = document.createElement("img");
     imageElement.src = "images/gameOver.png";
     imageElement.alt = "Game Over Image";
-    imageElement.style.width = "100%";
+    imageElement.style.width = "50%";
+    imageElement.style.display = "block";
+    imageElement.style.margin = "0 auto";
     gameOverElement.appendChild(imageElement);
 
     const playerNameInput = document.createElement("input");
@@ -278,8 +281,11 @@ function endGame() {
     playerNameInput.placeholder = "Enter your name";
     playerNameInput.id = "player-name";
     playerNameInput.style.display = "block";
-    playerNameInput.style.margin = "10px auto";
+    playerNameInput.style.margin = "20px auto";
     playerNameInput.style.width = "80%";
+    playerNameInput.style.padding = "10px";
+    playerNameInput.style.fontSize = "18px";
+    playerNameInput.style.textAlign = "center";
     gameOverElement.appendChild(playerNameInput);
 
     const submitButton = document.createElement("button");
@@ -287,6 +293,12 @@ function endGame() {
     submitButton.id = "submit-score";
     submitButton.style.display = "block";
     submitButton.style.margin = "10px auto";
+    submitButton.style.padding = "10px 20px";
+    submitButton.style.fontSize = "24px";
+    submitButton.style.cursor = "pointer";
+    submitButton.style.borderRadius = "5px";
+    submitButton.style.backgroundColor = "blue";
+    submitButton.style.color = "lightgray";
     gameOverElement.appendChild(submitButton);
 
     submitButton.addEventListener("click", function () {
@@ -309,7 +321,26 @@ function submitHighScore(score) {
     updateHighScoresList();
 
     document.getElementById("game-over").innerHTML = "";
-    init();
+    restartGame();
+}
+
+function restartGame() {
+    // Reset game state
+    aliens = [];
+    totalAliensSpawned = 0;
+    currentWave = 1;
+    document.getElementById("wave").textContent = currentWave;
+    document.getElementById("score").textContent = "0";
+    document.getElementById("health").textContent = "50";
+    document.getElementById("ammo").textContent = maxRockets;
+
+    // Show the start button and hide the soldier
+    document.getElementById("start-button").style.display = "block";
+    document.getElementById("soldier").style.display = "none";
+
+    // Clear any ongoing game loops or intervals
+    cancelAnimationFrame(gameLoopId);
+    clearInterval(spawnIntervalId);
 }
 
 function gameLoop() {
