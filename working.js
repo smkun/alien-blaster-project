@@ -9,11 +9,13 @@ let gameLoopId;
 let totalAliensSpawned = 0;
 let maxAliens = 20;
 let spawnIntervalId;
+let maxRockets = 20;
 
 // Initialize the game
 function init() {
     soldier = document.getElementById("soldier");
     aliensContainer = document.getElementById("aliens-container");
+    document.getElementById("ammo").textContent = maxRockets;
 
     document
         .getElementById("start-button")
@@ -137,49 +139,55 @@ function shootBullet() {
 
 // Shoot a rocket from the soldier
 function shootRocket() {
-    let rocket = document.createElement("div");
-    rocket.className = "rocket";
-    rocket.style.left = `${soldier.offsetLeft + soldier.offsetWidth}px`;
-    rocket.style.top = `${
-        soldier.offsetTop + soldier.offsetHeight / 2 - 2.5
-    }px`; // Center rocket vertically
-    document.getElementById("game-container").appendChild(rocket);
+    let currentAmmo = parseInt(document.getElementById("ammo").textContent);
+    if (currentAmmo > 0) {
+        let rocket = document.createElement("div");
+        rocket.className = "rocket";
+        rocket.style.left = `${soldier.offsetLeft + soldier.offsetWidth}px`;
+        rocket.style.top = `${
+            soldier.offsetTop + soldier.offsetHeight / 2 - 2.5
+        }px`; // Center rocket vertically
+        document.getElementById("game-container").appendChild(rocket);
 
-    // Move the rocket across the screen
-    let rocketInterval = setInterval(() => {
-        rocket.style.left = `${rocket.offsetLeft + rocketSpeed}px`;
+        // Move the rocket across the screen
+        let rocketInterval = setInterval(() => {
+            rocket.style.left = `${rocket.offsetLeft + rocketSpeed}px`;
 
-        for (let i = 0; i < aliens.length; i++) {
-            if (checkCollision(rocket, aliens[i])) {
-                // Decrement health
-                let health =
-                    parseInt(aliens[i].getAttribute("data-health")) - 5;
-                aliens[i].setAttribute("data-health", health);
+            for (let i = 0; i < aliens.length; i++) {
+                if (checkCollision(rocket, aliens[i])) {
+                    // Decrement health
+                    let health =
+                        parseInt(aliens[i].getAttribute("data-health")) - 5;
+                    aliens[i].setAttribute("data-health", health);
 
-                if (health <= 0) {
-                    // Remove the alien when health is 0 or less
-                    updateScore(aliens[i].classList[1]); // Update score before removing the alien
-                    aliens[i].remove();
-                    aliens.splice(i, 1); // Remove from aliens array
+                    if (health <= 0) {
+                        // Remove the alien when health is 0 or less
+                        updateScore(aliens[i].classList[1]); // Update score before removing the alien
+                        aliens[i].remove();
+                        aliens.splice(i, 1); // Remove from aliens array
+                    }
+
+                    // Remove rocket and stop its movement regardless of alien health
+                    rocket.remove();
+                    clearInterval(rocketInterval);
+                    break; // Exit the loop after handling collision
                 }
+            }
 
-                // Remove rocket and stop its movement regardless of alien health
+            // Remove the rocket if it goes out of the screen
+            if (
+                rocket.offsetLeft >
+                document.getElementById("game-container").offsetWidth
+            ) {
                 rocket.remove();
                 clearInterval(rocketInterval);
-                break; // Exit the loop after handling collision
             }
-        }
-
-        // Remove the rocket if it goes out of the screen
-        if (
-            rocket.offsetLeft >
-            document.getElementById("game-container").offsetWidth
-        ) {
-            rocket.remove();
-            clearInterval(rocketInterval);
-        }
-    }, 10);
+        }, 10);
+        // Decrease currentAmmo
+        document.getElementById("ammo").textContent = currentAmmo - 1;
+    }
 }
+
 function checkCollision(el1, el2) {
     let rect1 = el1.getBoundingClientRect();
     let rect2 = el2.getBoundingClientRect();

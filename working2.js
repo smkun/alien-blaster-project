@@ -15,11 +15,15 @@ let waveIncreaseFactor = 0.1;
 let isWaveInProgress = false;
 let highScores = [];
 
+function displayInitialHighScores() {
+    updateHighScoresList();
+}
+
 function init() {
     soldier = document.getElementById("soldier");
     aliensContainer = document.getElementById("aliens-container");
     document.getElementById("ammo").textContent = maxRockets;
-    updateHighScoresList();
+    displayInitialHighScores();
     document
         .getElementById("start-button")
         .addEventListener("click", startGame);
@@ -295,6 +299,10 @@ function endGame() {
 
     document.getElementById("soldier").style.display = "none";
     document.getElementById("next-wave-button").style.display = "none";
+
+    setTimeout(() => {
+        location.reload();
+    }, 20000);
 }
 
 function submitHighScore(score) {
@@ -304,9 +312,10 @@ function submitHighScore(score) {
         return;
     }
 
-    highScores.push({ name: playerName, score: score });
-    highScores.sort((a, b) => b.score - a.score);
-    updateHighScoresList();
+    const highScoresList = document.getElementById("high-scores-list");
+    const newScoreEntry = document.createElement("li");
+    newScoreEntry.textContent = `${playerName} - ${score}`;
+    highScoresList.appendChild(newScoreEntry);
 
     document.getElementById("game-over").innerHTML = "";
     init();
@@ -338,4 +347,4 @@ function gameLoop() {
     gameLoopId = requestAnimationFrame(gameLoop);
 }
 
-window.onload = init;
+window.onload = init();

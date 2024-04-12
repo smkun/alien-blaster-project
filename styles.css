@@ -148,6 +148,28 @@ body {
     color: lightgray;
 }
 
+#next-wave-button {
+    font-family: "Robot", "Courier New", Courier, monospace;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: blue;
+    color: lightgray;
+}
+
+#game-over-message {
+    font-size: 24px;
+    color: red;
+    background-color: #f9f9f9;
+    padding: 10px;
+    /* Add more styles as needed */
+}
+
 /*Game Elements*/
 #soldier {
     width: 60px;
