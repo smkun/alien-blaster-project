@@ -7,11 +7,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  html {
+}
+
+html {
     font-size: 62.5%;
-  }
+}
 body {
     margin: 0;
     padding: 0;
@@ -55,6 +55,7 @@ body {
 }
 #stats-bar {
     font-family: "Robot", "Courier New", Courier, monospace;
+    font-size: 1.6rem;
     grid-column: 1 / span 12;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -98,6 +99,7 @@ body {
 
 #high-scores-box {
     font-family: "Robot", "Courier New", Courier, monospace;
+    font-size: 1.6rem;
     color: lightgray;
     grid-column: 1 / span 3;
     background-color: #333;
@@ -120,6 +122,7 @@ body {
 }
 #instructions-box {
     font-family: "Robot", "Courier New", Courier, monospace;
+    font-size: 1.6rem;
     color: lightgray;
     grid-column: 10 / span 3;
     background-color: #333;
@@ -149,7 +152,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px;
+    font-size: 2rem;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
@@ -163,7 +166,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px;
+    font-size: 2rem;
     padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
@@ -209,7 +212,7 @@ body {
 
 #soldier {
     width: 60px;
-    height: 50px;
+    height: 60px;
     position: absolute;
     left: 20px;
     top: 50%;
@@ -218,8 +221,8 @@ body {
 }
 
 .alien {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     position: absolute;
     right: 0;
     background-size: cover;
@@ -231,12 +234,12 @@ body {
 
 .green {
     background-image: url("images/greenAlien.png");
-    width: 60px;
+    width: 70px;
 }
 
 .yellow {
     background-image: url("images/yellowAlien.png");
-    width: 70px;
+    width: 80px;
 }
 
 .bullet {
@@ -262,4 +265,14 @@ body {
 .alien-info .alien {
     position: static;
     margin-right: 10px;
+}
+
+.health-bar {
+    position: absolute;
+    top: -10px;
+    right: 0px;
+    width: 90%;
+    height: 5px;
+    background-color: green;
+    transition: width 0.3s;
 }

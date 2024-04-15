@@ -126,6 +126,15 @@ function spawnAlien() {
     alien.setAttribute("data-health", health);
     aliensContainer.appendChild(alien);
     aliens.push(alien);
+
+    if (alienType === "yellow") {
+        const healthBar = document.createElement("div");
+        healthBar.className = "health-bar";
+        healthBar.style.width = "90%";
+        healthBar.style.height = "5px";
+        healthBar.style.backgroundColor = "green";
+        alien.appendChild(healthBar);
+    }
 }
 
 // Handle keydown events
@@ -178,6 +187,14 @@ function shootBullet() {
                     aliens.splice(i, 1);
                 }
 
+                if (aliens[i].classList.contains("yellow")) {
+                    const healthBar = aliens[i].querySelector(".health-bar");
+                    const health = parseInt(
+                        aliens[i].getAttribute("data-health")
+                    );
+                    healthBar.style.width = `${(health / 8) * 100}%`;
+                }
+
                 bullet.remove();
                 clearInterval(bulletInterval);
                 break;
@@ -219,6 +236,15 @@ function shootRocket() {
                         updateScore(aliens[i].classList[1]);
                         aliens[i].remove();
                         aliens.splice(i, 1);
+                    }
+
+                    if (aliens[i].classList.contains("yellow")) {
+                        const healthBar =
+                            aliens[i].querySelector(".health-bar");
+                        const health = parseInt(
+                            aliens[i].getAttribute("data-health")
+                        );
+                        healthBar.style.width = `${(health / 8) * 100}%`;
                     }
 
                     rocket.remove();
@@ -407,6 +433,7 @@ function restartGame() {
 }
 
 // Game loop
+// Game loop
 function gameLoop() {
     for (let i = 0; i < aliens.length; i++) {
         let alienSpeed = 2;
@@ -425,6 +452,16 @@ function gameLoop() {
             aliens.splice(i, 1);
             i--;
             updateHealth();
+        }
+
+        if (aliens[i] && aliens[i].classList.contains("yellow")) {
+            const healthBar = aliens[i].querySelector(".health-bar");
+            const health = parseInt(aliens[i].getAttribute("data-health"));
+            if (health >= 3 && health <= 7) {
+                healthBar.style.backgroundColor = "yellow";
+            } else if (health >= 1 && health <= 2) {
+                healthBar.style.backgroundColor = "red";
+            }
         }
     }
 
