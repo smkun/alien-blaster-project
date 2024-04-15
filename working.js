@@ -1,9 +1,10 @@
+// Declaration of global variables
 let soldier;
 let aliensContainer;
 let aliens = [];
 let bulletSpeed = 5;
 let rocketSpeed = 8;
-let soldierSpeed = 10;
+let soldierSpeed = 12;
 let gameLoopId;
 let totalAliensSpawned = 0;
 let maxAliens = 20;
@@ -15,6 +16,7 @@ let waveIncreaseFactor = 0.1;
 let isWaveInProgress = false;
 let highScores = [];
 
+// Initialization function
 function init() {
     soldier = document.getElementById("soldier");
     aliensContainer = document.getElementById("aliens-container");
@@ -29,6 +31,7 @@ function init() {
     document.getElementById("next-wave-button").style.display = "none";
 }
 
+// Start the game
 function startGame() {
     document.getElementById("start-button").style.display = "none";
     soldier.style.display = "block";
@@ -39,12 +42,14 @@ function startGame() {
     startWave();
 }
 
+// Start a new wave
 function startWave() {
     isWaveInProgress = true;
     totalAliensSpawned = 0;
     spawnAliensOverTime();
 }
 
+// Start the next wave
 function startNextWave() {
     if (!isWaveInProgress) {
         document.getElementById("next-wave-button").style.display = "none";
@@ -60,17 +65,28 @@ function startNextWave() {
     }
 }
 
+// Spawn aliens over time
 function spawnAliensOverTime() {
     spawnIntervalId = setInterval(() => {
         if (totalAliensSpawned < maxAliens) {
             spawnAlien();
             totalAliensSpawned++;
+
+            if (totalAliensSpawned % 5 === 0) {
+                if (Math.random() < 0.5) {
+                    spawnHealthPack();
+                } else {
+                    spawnAmmoPack();
+                }
+            }
         } else {
             clearInterval(spawnIntervalId);
             checkForWaveCompletion();
         }
     }, 1000);
 }
+
+// Check if the current wave is completed
 function checkForWaveCompletion() {
     if (totalAliensSpawned >= maxAliens && aliens.length === 0) {
         isWaveInProgress = false;
@@ -80,6 +96,7 @@ function checkForWaveCompletion() {
     }
 }
 
+// Update the high scores list
 function updateHighScoresList() {
     const highScoresList = document.getElementById("high-scores-list");
     highScoresList.innerHTML = "";
@@ -91,6 +108,7 @@ function updateHighScoresList() {
     });
 }
 
+// Spawn an alien
 function spawnAlien() {
     const alienTypes = ["red", "green", "yellow"];
     const alienType = alienTypes[Math.floor(Math.random() * alienTypes.length)];
@@ -110,6 +128,7 @@ function spawnAlien() {
     aliens.push(alien);
 }
 
+// Handle keydown events
 function handleKeyDown(event) {
     switch (event.keyCode) {
         case 38:
@@ -134,6 +153,7 @@ function handleKeyDown(event) {
     }
 }
 
+// Shoot a bullet
 function shootBullet() {
     let bullet = document.createElement("div");
     bullet.className = "bullet";
@@ -174,6 +194,7 @@ function shootBullet() {
     }, 10);
 }
 
+// Shoot a rocket
 function shootRocket() {
     let currentAmmo = parseInt(document.getElementById("ammo").textContent);
     if (currentAmmo > 0) {
@@ -218,6 +239,37 @@ function shootRocket() {
     }
 }
 
+// Spawn a health pack
+function spawnHealthPack() {
+    const healthPack = document.createElement("div");
+    healthPack.className = "health-pack";
+    healthPack.style.right = "0px";
+    const gameContainerHeight =
+        document.getElementById("game-container").offsetHeight;
+    const healthPackHeight = 30;
+    const availableSpace = gameContainerHeight - healthPackHeight;
+    const randomTop = Math.random() * availableSpace;
+    healthPack.style.top = `${randomTop}px`;
+    healthPack.style.display = "block";
+    aliensContainer.appendChild(healthPack);
+}
+
+// Spawn an ammo pack
+function spawnAmmoPack() {
+    const ammoPack = document.createElement("div");
+    ammoPack.className = "ammo-pack";
+    ammoPack.style.right = "0px";
+    const gameContainerHeight =
+        document.getElementById("game-container").offsetHeight;
+    const ammoPackHeight = 30;
+    const availableSpace = gameContainerHeight - ammoPackHeight;
+    const randomTop = Math.random() * availableSpace;
+    ammoPack.style.top = `${randomTop}px`;
+    ammoPack.style.display = "block";
+    aliensContainer.appendChild(ammoPack);
+}
+
+// Check collision between two elements
 function checkCollision(el1, el2) {
     let rect1 = el1.getBoundingClientRect();
     let rect2 = el2.getBoundingClientRect();
@@ -230,6 +282,7 @@ function checkCollision(el1, el2) {
     );
 }
 
+// Update the score based on the alien type
 function updateScore(alienType) {
     const scoreElement = document.getElementById("score");
     let score = parseInt(scoreElement.textContent);
@@ -245,11 +298,12 @@ function updateScore(alienType) {
     scoreElement.textContent = score;
 }
 
-function updateHealth() {
+// Update the health of the soldier
+function updateHealth(amount = -1) {
     const healthElement = document.getElementById("health");
     let health = parseInt(healthElement.textContent);
 
-    health -= 1;
+    health = Math.min(health + amount, 50);
     healthElement.textContent = health;
 
     if (health <= 0) {
@@ -257,6 +311,16 @@ function updateHealth() {
     }
 }
 
+// Update the ammo count
+function updateAmmo(amount) {
+    const ammoElement = document.getElementById("ammo");
+    let ammo = parseInt(ammoElement.textContent);
+
+    ammo = Math.min(ammo + amount, maxRockets);
+    ammoElement.textContent = ammo;
+}
+
+// End the game
 function endGame() {
     cancelAnimationFrame(gameLoopId);
     clearInterval(spawnIntervalId);
@@ -272,6 +336,8 @@ function endGame() {
     imageElement.src = "images/gameOver.png";
     imageElement.alt = "Game Over Image";
     imageElement.style.width = "50%";
+    imageElement.style.display = "block";
+    imageElement.style.margin = "0 auto";
     gameOverElement.appendChild(imageElement);
 
     const playerNameInput = document.createElement("input");
@@ -279,8 +345,11 @@ function endGame() {
     playerNameInput.placeholder = "Enter your name";
     playerNameInput.id = "player-name";
     playerNameInput.style.display = "block";
-    playerNameInput.style.margin = "10px auto";
+    playerNameInput.style.margin = "20px auto";
     playerNameInput.style.width = "80%";
+    playerNameInput.style.padding = "10px";
+    playerNameInput.style.fontSize = "18px";
+    playerNameInput.style.textAlign = "center";
     gameOverElement.appendChild(playerNameInput);
 
     const submitButton = document.createElement("button");
@@ -288,6 +357,12 @@ function endGame() {
     submitButton.id = "submit-score";
     submitButton.style.display = "block";
     submitButton.style.margin = "10px auto";
+    submitButton.style.padding = "10px 20px";
+    submitButton.style.fontSize = "24px";
+    submitButton.style.cursor = "pointer";
+    submitButton.style.borderRadius = "5px";
+    submitButton.style.backgroundColor = "blue";
+    submitButton.style.color = "lightgray";
     gameOverElement.appendChild(submitButton);
 
     submitButton.addEventListener("click", function () {
@@ -298,6 +373,7 @@ function endGame() {
     document.getElementById("next-wave-button").style.display = "none";
 }
 
+// Submit high score
 function submitHighScore(score) {
     const playerName = document.getElementById("player-name").value;
     if (!playerName) {
@@ -313,8 +389,8 @@ function submitHighScore(score) {
     restartGame();
 }
 
+// Restart the game
 function restartGame() {
-    // Reset game state
     aliens = [];
     totalAliensSpawned = 0;
     currentWave = 1;
@@ -323,15 +399,14 @@ function restartGame() {
     document.getElementById("health").textContent = "50";
     document.getElementById("ammo").textContent = maxRockets;
 
-    // Show the start button and hide the soldier
     document.getElementById("start-button").style.display = "block";
     document.getElementById("soldier").style.display = "none";
 
-    // Clear any ongoing game loops or intervals
     cancelAnimationFrame(gameLoopId);
     clearInterval(spawnIntervalId);
 }
 
+// Game loop
 function gameLoop() {
     for (let i = 0; i < aliens.length; i++) {
         let alienSpeed = 2;
@@ -352,10 +427,34 @@ function gameLoop() {
             updateHealth();
         }
     }
+
+    const healthPacks = document.getElementsByClassName("health-pack");
+    for (let i = 0; i < healthPacks.length; i++) {
+        healthPacks[i].style.left = `${healthPacks[i].offsetLeft - 2}px`;
+        if (checkCollision(healthPacks[i], soldier)) {
+            healthPacks[i].remove();
+            updateHealth(3);
+        } else if (healthPacks[i].offsetLeft + healthPacks[i].offsetWidth < 0) {
+            healthPacks[i].remove();
+        }
+    }
+
+    const ammoPacks = document.getElementsByClassName("ammo-pack");
+    for (let i = 0; i < ammoPacks.length; i++) {
+        ammoPacks[i].style.left = `${ammoPacks[i].offsetLeft - 2}px`;
+        if (checkCollision(ammoPacks[i], soldier)) {
+            ammoPacks[i].remove();
+            updateAmmo(3);
+        } else if (ammoPacks[i].offsetLeft + ammoPacks[i].offsetWidth < 0) {
+            ammoPacks[i].remove();
+        }
+    }
+
     if (totalAliensSpawned >= maxAliens && aliens.length === 0) {
         checkForWaveCompletion();
     }
     gameLoopId = requestAnimationFrame(gameLoop);
 }
 
+// Initialization function
 window.onload = init;

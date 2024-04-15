@@ -3,6 +3,15 @@
     src: url("fonts/robot9000italic-yzxe8-webfont.woff2") format("woff2"),
         url("fonts/robot9000italic-yzxe8-webfont.woff") format("woff");
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 62.5%;
+  }
 body {
     margin: 0;
     padding: 0;
@@ -167,10 +176,37 @@ body {
     color: red;
     background-color: #f9f9f9;
     padding: 10px;
-    /* Add more styles as needed */
+}
+.powerup-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
+.powerup-info .health-pack,
+.powerup-info .ammo-pack {
+    position: static;
+    margin-right: 10px;
+}
 /*Game Elements*/
+.health-pack {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 0;
+    background-image: url("images/healthPack.png");
+    background-size: cover;
+}
+
+.ammo-pack {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    right: 0;
+    background-image: url("images/ammoCrate.png");
+    background-size: cover;
+}
+
 #soldier {
     width: 60px;
     height: 50px;
