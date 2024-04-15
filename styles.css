@@ -44,6 +44,7 @@ body {
     border-radius: 8px;
     background-image: url("images/hyperspace.jpg");
     background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
     border: 2px solid black;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
@@ -225,6 +226,7 @@ body {
     height: 60px;
     position: absolute;
     right: 0;
+    margin-left: 0;
     background-size: cover;
 }
 
@@ -234,7 +236,7 @@ body {
 
 .green {
     background-image: url("images/greenAlien.png");
-    width: 70px;
+    height: 70px;
 }
 
 .yellow {
