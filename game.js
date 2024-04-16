@@ -395,13 +395,14 @@ function endGame() {
     cancelAnimationFrame(gameLoopId);
     clearInterval(spawnIntervalId);
 
+    // Remove all aliens from the game container
     while (aliensContainer.firstChild) {
         aliensContainer.firstChild.remove();
     }
 
+    // Game Over UI setup
     const gameOverElement = document.getElementById("game-over");
     gameOverElement.innerHTML = "";
-
     const imageElement = document.createElement("img");
     imageElement.src = "images/gameOver.png";
     imageElement.alt = "Game Over Image";
@@ -410,6 +411,7 @@ function endGame() {
     imageElement.style.margin = "0 auto";
     gameOverElement.appendChild(imageElement);
 
+    // Player name input for high score submission
     const playerNameInput = document.createElement("input");
     playerNameInput.type = "text";
     playerNameInput.placeholder = "Enter your name";
@@ -422,6 +424,7 @@ function endGame() {
     playerNameInput.style.textAlign = "center";
     gameOverElement.appendChild(playerNameInput);
 
+    // Submit button for high score
     const submitButton = document.createElement("button");
     submitButton.textContent = "Submit Score";
     submitButton.id = "submit-score";
@@ -435,9 +438,18 @@ function endGame() {
     submitButton.style.color = "lightgray";
     gameOverElement.appendChild(submitButton);
 
+    // Stop background music and reset its time
     const backgroundMusic = document.getElementById("background-music");
     backgroundMusic.pause();
     backgroundMusic.currentTime = 0;
+
+    // Stop and reset rocket sounds
+    const rocketSound = document.getElementById("rocket-sound");
+    rocketSound.pause();
+    rocketSound.currentTime = 0;
+
+    // Disable the ability to shoot rockets
+    document.removeEventListener("keydown", handleKeyDown);
 
     submitButton.addEventListener("click", function () {
         submitHighScore(parseInt(document.getElementById("score").textContent));

@@ -215,6 +215,10 @@ body {
     box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.6); /* Adds a white glow around the button */
 }
 
+.credits {
+    display: none;
+}
+
 /*Game Elements*/
 .health-pack {
     width: 50px;
