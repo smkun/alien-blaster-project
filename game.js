@@ -29,6 +29,24 @@ function init() {
         .getElementById("next-wave-button")
         .addEventListener("click", startNextWave);
     document.getElementById("next-wave-button").style.display = "none";
+
+    // Get the background music element
+    const backgroundMusic = document.getElementById("background-music");
+    // Set the default volume to 20% (adjust as needed)
+    backgroundMusic.volume = 0.08;
+
+    // Add the event listener for the mute button
+    document
+        .getElementById("mute-button")
+        .addEventListener("click", function () {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                this.textContent = "Mute";
+            } else {
+                backgroundMusic.pause();
+                this.textContent = "Unmute";
+            }
+        });
 }
 
 // Start the game
@@ -37,7 +55,9 @@ function startGame() {
     soldier.style.display = "block";
     soldier.style.top = "50%";
     currentWave = 1;
+    const backgroundMusic = document.getElementById("background-music");
     document.addEventListener("keydown", handleKeyDown);
+    backgroundMusic.play();
     gameLoop();
     startWave();
 }
@@ -169,6 +189,13 @@ function handleKeyDown(event) {
     }
 }
 
+function playLaserSound() {
+    const rocketSound = document.getElementById("laser-sound");
+    rocketSound.currentTime = 0;
+    rocketSound.volume = 0.5;
+    rocketSound.play();
+}
+
 // Shoot a bullet
 function shootBullet() {
     let bullet = document.createElement("div");
@@ -178,6 +205,7 @@ function shootBullet() {
         soldier.offsetTop + soldier.offsetHeight / 2 - 2.5
     }px`;
     document.getElementById("game-container").appendChild(bullet);
+    playLaserSound();
 
     let bulletInterval = setInterval(() => {
         bullet.style.left = `${bullet.offsetLeft + bulletSpeed}px`;
@@ -192,6 +220,7 @@ function shootBullet() {
                     updateScore(aliens[i].classList[1]);
                     aliens[i].remove();
                     aliens.splice(i, 1);
+                    s;
                 }
 
                 if (aliens[i].classList.contains("yellow")) {
@@ -218,10 +247,18 @@ function shootBullet() {
     }, 10);
 }
 
+function playRocketSound() {
+    const rocketSound = document.getElementById("rocket-sound");
+    rocketSound.currentTime = 0;
+    rocketSound.volume = 0.5;
+    rocketSound.play();
+}
+
 // Shoot a rocket
 function shootRocket() {
     let currentAmmo = parseInt(document.getElementById("ammo").textContent);
     if (currentAmmo > 0) {
+        playRocketSound();
         let rocket = document.createElement("div");
         rocket.className = "rocket";
         rocket.style.left = `${soldier.offsetLeft + soldier.offsetWidth}px`;
@@ -397,6 +434,10 @@ function endGame() {
     submitButton.style.backgroundColor = "blue";
     submitButton.style.color = "lightgray";
     gameOverElement.appendChild(submitButton);
+
+    const backgroundMusic = document.getElementById("background-music");
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
 
     submitButton.addEventListener("click", function () {
         submitHighScore(parseInt(document.getElementById("score").textContent));

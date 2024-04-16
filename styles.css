@@ -192,6 +192,18 @@ body {
     position: static;
     margin-right: 10px;
 }
+
+#mute-button {
+    font-family: "Robot", "Courier New", Courier, monospace;
+    font-size: 1.6rem;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: blue;
+    color: lightgray;
+    margin-left: 10px;
+}
+
 /*Game Elements*/
 .health-pack {
     width: 50px;

@@ -39,6 +39,14 @@ To run Alien Blaster locally, follow these steps:
 -   `images/` - This folder contains all the images used in the game.
 -   `fonts/` - Contains custom fonts used in the game.
 
+## Credits
+
+Music by Luis Humanoide from Pixabay - Space Adventues Orchestral Music - Star Wars Style
+Rocket Sound Effect from Pixabay - Bad Explosion
+Laser Sound Effect from Pixabay - Blaster 2
+Vitals - Hearbeat MEdical Cardiogram Animation - Videezy by adyligou
+
+
 ## Contributing
 
 Interested in contributing to Alien Blaster? Go for it !!
