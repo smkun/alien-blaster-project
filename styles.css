@@ -66,6 +66,7 @@ body {
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
     overflow: hidden;
     height: 40px;
+    align-items: center;
 }
 
 #vitals-video {
@@ -80,12 +81,14 @@ body {
 }
 
 #health-ammo {
+    margin-top: 3px;
     grid-column: 4 / span 2;
     color: red;
     text-align: center;
 }
 
 #score-container {
+    margin-top: 3px;
     grid-column: 9 / span 1;
     text-align: center;
     color: rgb(126, 204, 235);
@@ -196,12 +199,20 @@ body {
 #mute-button {
     font-family: "Robot", "Courier New", Courier, monospace;
     font-size: 1.6rem;
+    width: 7rem;
+    height: 3rem;
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 5px;
     background-color: blue;
     color: lightgray;
-    margin-left: 10px;
+    margin-left: 0.5rem;
+}
+
+#mute-button:hover,
+#start-button:hover,
+#next-wave-button:hover {
+    box-shadow: 0 0 8px 4px rgba(255, 255, 255, 0.6); /* Adds a white glow around the button */
 }
 
 /*Game Elements*/
