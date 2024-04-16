@@ -122,7 +122,14 @@ function spawnAlien() {
     const randomTop = Math.random() * availableSpace;
     alien.style.top = `${randomTop}px`;
     alien.style.display = "block";
-    const health = alienType === "yellow" ? 8 : 1;
+    let health;
+    if (alienType === "yellow") {
+        health = 8;
+    } else if (alienType === "red") {
+        health = 2; // Set the health of red aliens to 2
+    } else {
+        health = 1;
+    }
     alien.setAttribute("data-health", health);
     aliensContainer.appendChild(alien);
     aliens.push(alien);
@@ -314,11 +321,11 @@ function updateScore(alienType) {
     let score = parseInt(scoreElement.textContent);
 
     if (alienType === "red") {
-        score += 1;
-    } else if (alienType === "green") {
         score += 2;
+    } else if (alienType === "green") {
+        score += 1;
     } else if (alienType === "yellow") {
-        score += 3;
+        score += 4;
     }
 
     scoreElement.textContent = score;
@@ -431,8 +438,6 @@ function restartGame() {
     cancelAnimationFrame(gameLoopId);
     clearInterval(spawnIntervalId);
 }
-
-// Game loop
 // Game loop
 function gameLoop() {
     for (let i = 0; i < aliens.length; i++) {

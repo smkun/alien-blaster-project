@@ -440,7 +440,6 @@ function restartGame() {
 }
 
 // Game loop
-// Game loop
 function gameLoop() {
     for (let i = 0; i < aliens.length; i++) {
         let alienSpeed = 2;
