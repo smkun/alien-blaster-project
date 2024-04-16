@@ -2,6 +2,10 @@
 
 Alien Blaster is an interactive web-based game where players must defend against waves of aliens. Using keyboard controls, players can shoot lasers and rockets to destroy incoming alien forces while collecting health and ammo power-ups to sustain their defense.
 
+## Play it here
+[Play Alien Blaster!](https://smkun.github.io/alien-blaster-project/)
+
+
 ## Features
 
 -   Start and navigate through increasing waves of aliens.
