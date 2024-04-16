@@ -5,6 +5,7 @@ Alien Blaster is an interactive web-based game where players must defend against
 ## Play it here
 [Play Alien Blaster!](https://smkun.github.io/alien-blaster-project/)
 
+![Gameplay GIF](/images/gamePlay.gif)
 
 ## Features
 
