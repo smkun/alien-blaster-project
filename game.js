@@ -32,9 +32,8 @@ function init() {
 
     // Get the background music element
     const backgroundMusic = document.getElementById("background-music");
-    // Set the default volume to 20% (adjust as needed)
+    // Set the default volume
     backgroundMusic.volume = 0.08;
-
     // Add the event listener for the mute button
     document
         .getElementById("mute-button")
@@ -146,7 +145,7 @@ function spawnAlien() {
     if (alienType === "yellow") {
         health = 8;
     } else if (alienType === "red") {
-        health = 2; // Set the health of red aliens to 2
+        health = 2; 
     } else {
         health = 1;
     }
