@@ -136,7 +136,7 @@ function spawnAlien() {
     alien.style.right = "0px";
     const gameContainerHeight =
         document.getElementById("game-container").offsetHeight;
-    const alienHeight = 50;
+    const alienHeight = 60;
     const availableSpace = gameContainerHeight - alienHeight;
     const randomTop = Math.random() * availableSpace;
     alien.style.top = `${randomTop}px`;
