@@ -199,14 +199,15 @@ body {
 #mute-button {
     font-family: "Robot", "Courier New", Courier, monospace;
     font-size: 1.6rem;
-    width: 7rem;
+    width: 8rem;
     height: 3rem;
-    padding: 5px 10px;
+    padding: 5px 5px;
     cursor: pointer;
     border-radius: 5px;
     background-color: blue;
     color: lightgray;
     margin-left: 0.5rem;
+    text-align: center;
 }
 
 #mute-button:hover,
