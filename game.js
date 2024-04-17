@@ -2,7 +2,7 @@
 let soldier;
 let aliensContainer;
 let aliens = [];
-let bulletSpeed = 5;
+let LaserSpeed = 5;
 let rocketSpeed = 8;
 let soldierSpeed = 12;
 let gameLoopId;
@@ -180,7 +180,7 @@ function handleKeyDown(event) {
             )}px`;
             break;
         case 32:
-            shootBullet();
+            shootLaser();
             break;
         case 82:
             shootRocket();
@@ -195,22 +195,22 @@ function playLaserSound() {
     rocketSound.play();
 }
 
-// Shoot a bullet
-function shootBullet() {
-    let bullet = document.createElement("div");
-    bullet.className = "bullet";
-    bullet.style.left = `${soldier.offsetLeft + soldier.offsetWidth}px`;
-    bullet.style.top = `${
+// Shoot a Laser
+function shootLaser() {
+    let Laser = document.createElement("div");
+    Laser.className = "Laser";
+    Laser.style.left = `${soldier.offsetLeft + soldier.offsetWidth}px`;
+    Laser.style.top = `${
         soldier.offsetTop + soldier.offsetHeight / 2 - 2.5
     }px`;
-    document.getElementById("game-container").appendChild(bullet);
+    document.getElementById("game-container").appendChild(Laser);
     playLaserSound();
 
-    let bulletInterval = setInterval(() => {
-        bullet.style.left = `${bullet.offsetLeft + bulletSpeed}px`;
+    let LaserInterval = setInterval(() => {
+        Laser.style.left = `${Laser.offsetLeft + LaserSpeed}px`;
 
         for (let i = 0; i < aliens.length; i++) {
-            if (checkCollision(bullet, aliens[i])) {
+            if (checkCollision(Laser, aliens[i])) {
                 let health =
                     parseInt(aliens[i].getAttribute("data-health")) - 1;
                 aliens[i].setAttribute("data-health", health);
@@ -230,18 +230,18 @@ function shootBullet() {
                     healthBar.style.width = `${(health / 8) * 100}%`;
                 }
 
-                bullet.remove();
-                clearInterval(bulletInterval);
+                Laser.remove();
+                clearInterval(LaserInterval);
                 break;
             }
         }
 
         if (
-            bullet.offsetLeft >
+            Laser.offsetLeft >
             document.getElementById("game-container").offsetWidth
         ) {
-            bullet.remove();
-            clearInterval(bulletInterval);
+            Laser.remove();
+            clearInterval(LaserInterval);
         }
     }, 10);
 }
